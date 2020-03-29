@@ -39,7 +39,9 @@
                                 <label for="url" class="col-md-4 col-form-label text-md-right">관련링크</label>
 
                                 <div class="col-md-6">
+                                    @isset($restaurant->url)
                                     <a href="{{ $restaurant->url }}" target="_blank">{{ $restaurant->url }}</a>
+                                    @endisset
                                 </div>
                             </div>
 

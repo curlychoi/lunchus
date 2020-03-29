@@ -13,7 +13,15 @@ class LunchController extends Controller
             'week' => [
                 '일', '월', '화', '수', '목', '금', '토'
             ],
+            'lunches' => Lunch::today()->get()
         ]);
+    }
+
+    public function join(Lunch $lunch)
+    {
+        $lunch->users()->attach(auth()->id());
+
+        return redirect(route('lunch_home'));
     }
 
     /**

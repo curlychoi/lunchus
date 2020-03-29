@@ -1,5 +1,4 @@
 <?php /** @var \App\Restaurant $restaurant */?>
-<?php /** @var \App\Restaurant $restaurant */?>
 @extends('layouts.app')
 
 @section('content')
@@ -34,13 +33,15 @@
                             <tbody>
                             @forelse($restaurants as $restaurant)
                             <tr>
-                                <td>{{ $restaurant->category()->first()->name }}</td>
+                                <td>{{ $restaurant->category->name }}</td>
                                 <td>
                                     <a href="{{ route('restaurant_show', $restaurant->id) }}">{{ $restaurant->name }}</a>
                                 </td>
                                 <td>
                                     {{ $restaurant->walk_time }}
+                                    @if($restaurant->url)
                                     <a href="{{ $restaurant->url }}" target="_blank"><i class="fa fa-link"></i></a>
+                                    @endif
                                 </td>
                                 <td style="width: 200px; text-overflow: ellipsis; overflow: hidden">{{ $restaurant->memo }}</td>
                                 <td style="width: 100px;">
@@ -49,7 +50,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="4" style="padding:50px 0 50px 0; text-align: center;">
+                                <td colspan="5" style="padding:50px 0 50px 0; text-align: center;">
                                     식당등록 부탁해요 (づ｡◕‿‿◕｡)づ
                                 </td>
                             </tr>

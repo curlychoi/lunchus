@@ -32,5 +32,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/restaurants/{restaurant}/lunch', 'RestaurantController@toLunch')->name('to_lunch');
 
     Route::get('/lunch', 'LunchController@index')->name('lunch_home');
+    Route::post('/lunch/{lunch}', 'LunchController@join')->name('lunch_join');
 });
 

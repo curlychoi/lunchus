@@ -15,14 +15,20 @@ class Lunch extends Model
         return $this->belongsTo(Restaurant::class);
     }
 
-    public function user()
+    public function users()
     {
-        return $this->hasOne(User::class);
+        return $this->hasMany(User::class);
     }
 
-    public function scopeTodayRestaurant($query, $restaurantId)
+    public function scopeIsTodayRestaurant($query, $restaurantId)
     {
         return $query->where('lunch_day', now()->format('Y-m-d'))
             ->where('restaurant_id', $restaurantId);
+    }
+
+    public function scopeToday($query)
+    {
+        return $query->where('lunch_day', now()->format('Y-m-d'))
+            ->orderBy('id');
     }
 }
