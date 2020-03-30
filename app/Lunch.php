@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Lunch extends Model
 {
@@ -17,7 +18,8 @@ class Lunch extends Model
 
     public function users()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(User::class, 'lunch_user')
+            ->orderBy('lunch_user.id');
     }
 
     public function scopeIsTodayRestaurant($query, $restaurantId)
@@ -31,4 +33,21 @@ class Lunch extends Model
         return $query->where('lunch_day', now()->format('Y-m-d'))
             ->orderBy('id');
     }
+
+    public static function isJoinToday($userId)
+    {
+        return DB::table('lunch_user')
+            ->where('lunch_day', now()->format('Y-m-d'))
+            ->where('user_id', $userId)
+            ->exists();
+    }
+
+    public static function dropTodayLunch($userId)
+    {
+        return DB::table('lunch_user')
+            ->where('lunch_day', now()->format('Y-m-d'))
+            ->where('user_id', $userId)
+            ->delete();
+    }
 }
+

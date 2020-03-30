@@ -14,21 +14,45 @@
 
                     <div class="card-body">
                         @forelse($lunches as $lunch)
-                            <div class="card" style="width: 18rem;">
+                            <div class="card mb-3">
                                 <div class="card-body">
+                                    <button type="button" class="btn btn-primary btn-sm btn-join float-right"
+                                            data-url="{{ route('lunch_join', $lunch->id) }}">
+                                        참여
+                                        ({{ $lunch->users()->count() }})
+                                    </button>
+
                                     <h5 class="card-title">
                                         <a href="{{ route('restaurant_show', $lunch->restaurant->id) }}">
                                             {{ $lunch->restaurant->name }}
                                         </a>
-                                        <small class="text-sm-left">({{ $lunch->restaurant->walk_time }})</small>
+                                        <span class="small" style="font-size:0.7em">(이동시간  {{ $lunch->restaurant->walk_time }})</span>
                                     </h5>
                                     <p class="card-text">
                                         {{ $lunch->restaurant->memo }}
                                     </p>
-                                    <button type="button" class="btn btn-primary btn-sm" id="btn-join"
-                                       data-url="{{ route('lunch_join', $lunch->id) }}">
-                                        참여
+
+                                </div>
+                                <div class="card-footer">
+
+                                    @if ($lunch->user_id === auth()->id())
+                                        <form method="post" id="form-delete-{{ $lunch->id }}" action="{{ route('lunch_delete', [$lunch->id]) }}" onsubmit="return destroy(event)">
+                                            @csrf
+                                            @method('delete')
+                                            <i class="fa fa-trash float-right mt-2 btn-delete" style="cursor:pointer" data-id="{{ $lunch->id }}"></i>
+                                        </form>
+                                    @endif
+
+                                    <button class="btn btn-light btn-sm">
+                                        참여자:
                                     </button>
+                                    @foreach ($lunch->users()->get() as $user)
+                                        <button class="btn btn-sm {{ ($user->id === auth()->id()) ? 'btn-warning btn-me' : 'btn-light' }}">
+                                            {{ $user->name }}
+                                        </button>
+                                    @endforeach
+
+
                                 </div>
                             </div>
                         @empty
@@ -46,13 +70,36 @@
 
 @push('script')
     <script>
-        $('#btn-join').on('click', function () {
-            if (!confirm('참여하시겠습니까?')) {
-                return;
-            }
+        $(function () {
+            $('.btn-join').on('click', function () {
+                if (!confirm('참여 하시겠습니까?')) {
+                    return;
+                }
 
-            location.href = $(this).attr('data-url');
-        })
+                location.href = $(this).attr('data-url');
+            });
+
+            $('.btn-me').on('click', function () {
+                if (!confirm('취소 하시겠습니까?')) {
+                    return;
+                }
+
+                location.href = '{{ route('lunch_user_delete') }}';
+            });
+
+            $('.btn-delete').on('click', function () {
+                $('#form-delete-' + $(this).attr('data-id')).submit();
+            });
+        });
+
+        function destroy(event) {
+            if (!confirm('정말?')) {
+                return false;
+            }
+            return true;
+        }
 
     </script>
 @endpush
+
+

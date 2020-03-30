@@ -65,7 +65,7 @@ class LunchPolicy
      */
     public function delete(User $user, Lunch $lunch)
     {
-        return $user->id === $lunch->user()->get()->id;
+        return $user->id === $lunch->user_id;
     }
 
     /**

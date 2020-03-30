@@ -23,19 +23,26 @@
                         <table class="table table-striped table-hover">
                             <thead>
                             <tr>
-                                <th>종류</th>
                                 <th>이름</th>
                                 <th>이동시간</th>
-                                <th>설명</th>
+{{--                                <th>설명</th>--}}
                                 <th>-</th>
                             </tr>
                             </thead>
                             <tbody>
                             @forelse($restaurants as $restaurant)
                             <tr>
-                                <td>{{ $restaurant->category->name }}</td>
                                 <td>
-                                    <a href="{{ route('restaurant_show', $restaurant->id) }}">{{ $restaurant->name }}</a>
+                                    <a href="{{ route('restaurant_show', $restaurant->id) }}">
+                                        [{{ $restaurant->category->name }}]
+                                        {{ $restaurant->name }}
+                                    </a>
+                                    @if ($restaurant->comments->count())
+                                    <span class="small">
+                                        <i class="fa fa-comments-o"></i>
+                                        {{ $restaurant->comments->count() }}
+                                    </span>
+                                    @endif
                                 </td>
                                 <td>
                                     {{ $restaurant->walk_time }}
@@ -43,9 +50,9 @@
                                     <a href="{{ $restaurant->url }}" target="_blank"><i class="fa fa-link"></i></a>
                                     @endif
                                 </td>
-                                <td style="width: 200px; text-overflow: ellipsis; overflow: hidden">{{ $restaurant->memo }}</td>
+{{--                                <td style="width: 200px; text-overflow: ellipsis; overflow: hidden">{{ $restaurant->memo }}</td>--}}
                                 <td style="width: 100px;">
-                                    <a href="{{ route('to_lunch', $restaurant->id) }}" class="btn btn-danger btn-sm">오늘점심</a>
+                                    <button data-url="{{ route('to_lunch', $restaurant->id) }}" class="btn btn-danger btn-sm btn-to-lunch">오늘점심</button>
                                 </td>
                             </tr>
                             @empty
@@ -63,3 +70,17 @@
         </div>
     </div>
 @endsection
+
+@push('script')
+    <script>
+        $(function () {
+            $('.btn-to-lunch').on('click', function () {
+                if (!confirm('오늘 점심메뉴로 등록하시겠습니까?')) {
+                    return;
+                }
+
+                location.href = $(this).attr('data-url');
+            });
+        })
+    </script>
+@endpush

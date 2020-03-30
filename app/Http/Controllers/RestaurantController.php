@@ -88,13 +88,19 @@ class RestaurantController extends Controller
      */
     public function toLunch(Restaurant $restaurant)
     {
-        if (!Lunch::isTodayRestaurant($restaurant->id)->exists()) {
-            Lunch::create([
-                'lunch_day' => now()->format('Y-m-d'),
-                'restaurant_id' => $restaurant->id,
-                'user_id' => auth()->id(),
-            ]);
-        }
+        $lunch = Lunch::firstOrcreate([
+            'lunch_day' => now()->format('Y-m-d'),
+            'restaurant_id' => $restaurant->id,
+        ], [
+            'user_id' => auth()->id(),
+        ]);
+
+//        Lunch::dropTodayLunch(auth()->id());
+//
+//        $lunch->users()->attach(auth()->id(), [
+//            'lunch_day' => now()->format('Y-m-d'),
+//            'created_at' => now(),
+//        ]);
 
         return redirect(route('lunch_home'));
     }

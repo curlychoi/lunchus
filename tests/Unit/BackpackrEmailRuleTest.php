@@ -20,6 +20,5 @@ class BackpackrEmailRuleTest extends TestCase
         $this->assertFalse($backpackrEmailRule->passes('', 'curlychoi@backpackr.com'));
         $this->assertTrue($backpackrEmailRule->passes('', 'curlychoi@backpac.kr'));
         $this->assertTrue($backpackrEmailRule->passes('', '1231.afa@backpac.kr'));
-
     }
 }

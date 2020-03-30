@@ -13,13 +13,27 @@ class LunchController extends Controller
             'week' => [
                 '일', '월', '화', '수', '목', '금', '토'
             ],
-            'lunches' => Lunch::today()->get()
+            'lunches' => Lunch::today()->get()/*->sortByDesc(function ($lunch) {
+                return $lunch->users->count();
+            })*/
         ]);
     }
 
     public function join(Lunch $lunch)
     {
-        $lunch->users()->attach(auth()->id());
+        Lunch::dropTodayLunch(auth()->id());
+
+        $lunch->users()->attach(auth()->id(), [
+            'lunch_day' => now()->format('Y-m-d'),
+            'created_at' => now(),
+        ]);
+
+        return redirect(route('lunch_home'));
+    }
+
+    public function userDelete()
+    {
+        Lunch::dropTodayLunch(auth()->id());
 
         return redirect(route('lunch_home'));
     }
@@ -82,11 +96,19 @@ class LunchController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Lunch  $lunch
-     * @return \Illuminate\Http\Response
+     * @param \App\Lunch $lunch
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
      */
     public function destroy(Lunch $lunch)
     {
-        //
+        if ($lunch->users->count()) {
+            abort(403, '참여자가 있어 삭제가 안되지롱ㅋㅋ');
+        }
+        $lunch->delete();
+
+        return redirect(route('lunch_home'));
     }
+
+
 }
