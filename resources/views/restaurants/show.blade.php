@@ -62,10 +62,10 @@
 
 
                             <div class="form-group row">
-                                <label for="memo" class="col-md-4 col-form-label text-md-right">최초 등록자</label>
+                                <label for="memo" class="col-md-4 col-form-label text-md-right">최근 업데이트 </label>
 
                                 <div class="col-md-6 col-form-label">
-                                    {{ $restaurant->user->name }}
+                                    {{ $restaurant->histories()->first()->user->name ?? $restaurant->user->name }}
                                 </div>
                             </div>
 

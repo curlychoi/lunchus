@@ -31,12 +31,6 @@
                                     <p class="card-text">
                                         {{ $lunch->restaurant->memo }}
                                     </p>
-                                    <div class="small mt-3">
-                                        제안자 : {{ $lunch->user->name }}
-                                    </div>
-
-                                </div>
-                                <div class="card-footer">
 
                                     @if ($lunch->user_id === auth()->id())
                                         <form method="post" id="form-delete-{{ $lunch->id }}" action="{{ route('lunch_delete', [$lunch->id]) }}" onsubmit="return destroy(event)">
@@ -46,12 +40,19 @@
                                         </form>
                                     @endif
 
+                                    <div class="small mt-3">
+                                         제안 : {{ $lunch->user->name }}
+                                    </div>
+
+                                </div>
+                                <div class="card-footer">
+
                                     <button class="btn btn-light btn-sm">
                                         참여자:
                                     </button>
-                                    @foreach ($lunch->users()->get() as $user)
+                                    @foreach ($lunch->users()->get() as $index => $user)
                                         <button class="btn btn-sm {{ ($user->id === auth()->id()) ? 'btn-warning btn-me' : 'btn-light' }}">
-                                            @if ($user->id === $lunch->user_id) <i class="fa fa-credit-card"></i> @endif
+                                            @if (!$index) <i class="fa fa-credit-card"></i> @endif
                                             {{ $user->name }}
                                         </button>
                                     @endforeach

@@ -17,7 +17,10 @@ class RestaurantController extends Controller
     {
         return view('restaurants.list', [
             'categories' => Category::all(),
-            'restaurants' => Restaurant::search($request->get('query'))->get(),
+            'restaurants' => Restaurant::query()
+                ->search($request->get('query'))
+                ->latest('id')
+                ->get(),
         ]);
     }
 
@@ -58,9 +61,9 @@ class RestaurantController extends Controller
         ]);
     }
 
-    public function update(Request $request, Restaurant $restaurant)
+    public function update(StoreRestaurantRequest $request, Restaurant $restaurant)
     {
-        Restaurant::where('id', $restaurant->id)->update([
+        $restaurant->update([
             'category_id' => $request->post('category_id'),
             'name' => $request->post('name'),
             'url' => $request->post('url'),
