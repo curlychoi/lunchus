@@ -96,12 +96,12 @@ class RestaurantController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-//        Lunch::dropTodayLunch(auth()->id());
-//
-//        $lunch->users()->attach(auth()->id(), [
-//            'lunch_day' => now()->format('Y-m-d'),
-//            'created_at' => now(),
-//        ]);
+        Lunch::dropTodayLunch(auth()->id());
+
+        $lunch->users()->attach(auth()->id(), [
+            'lunch_day' => now()->format('Y-m-d'),
+            'created_at' => now(),
+        ]);
 
         return redirect(route('lunch_home'));
     }

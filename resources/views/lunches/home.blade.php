@@ -48,6 +48,7 @@
                                     </button>
                                     @foreach ($lunch->users()->get() as $user)
                                         <button class="btn btn-sm {{ ($user->id === auth()->id()) ? 'btn-warning btn-me' : 'btn-light' }}">
+                                            @if ($user->id === $lunch->user_id) <i class="fa fa-credit-card"></i> @endif
                                             {{ $user->name }}
                                         </button>
                                     @endforeach
