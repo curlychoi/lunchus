@@ -30,7 +30,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/restaurants/{restaurant}', 'RestaurantController@show')->name('restaurant_show');
     Route::get('/restaurants/{restaurant}/edit', 'RestaurantController@edit')->name('restaurant_edit');
     Route::post('/restaurants/{restaurant}', 'RestaurantController@update')->name('restaurant_update');
-    Route::delete('/restaurants/{restaurant}', 'RestaurantController@destroy')->name('restaurant_destroy');
+    Route::delete('/restaurants/{restaurant}', 'RestaurantController@destroy')
+        ->name('restaurant_destroy')
+        ->middleware('can:delete,restaurant');
     Route::get('/restaurants/{restaurant}/lunch', 'RestaurantController@toLunch')->name('to_lunch');
 
     Route::post('/restaurants/{restaurant}/comments', 'CommentController@store')->name('comments');

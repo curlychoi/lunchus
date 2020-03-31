@@ -65,7 +65,7 @@
                                 <label for="memo" class="col-md-4 col-form-label text-md-right">최근 업데이트 </label>
 
                                 <div class="col-md-6 col-form-label">
-                                    {{ $restaurant->histories()->first()->user->name ?? $restaurant->user->name }}
+                                    {{ $restaurant->histories()->first()->user->name ?? $restaurant->user->name ?? '' }}
                                 </div>
                             </div>
 
@@ -89,9 +89,17 @@
                         </form>
                     </div>
                 </div>
-                <div class="mt-1 text-right">
-                    <a href="{{ route('restaurant_edit', $restaurant->id) }}" class="btn btn-secondary btn-sm">수정</a>
-                    <a href="{{ route('restaurants') }}" class="btn btn-secondary btn-sm">목록</a>
+
+                <div class="mt-1 clearfix">
+                    <form method="post" action="{{ route('restaurant_destroy', $restaurant->id) }}" class="float-left" onsubmit="return confirm('정말?')">
+                        @csrf
+                        @method('delete')
+                        <a href="{{ route('restaurant_edit', $restaurant->id) }}" class="btn btn-secondary btn-sm">수정</a>
+                        @can('delete', $restaurant)
+                        <button type="submit" class="btn btn-secondary btn-sm">삭제</button>
+                        @endcan
+                    </form>
+                    <a href="{{ route('restaurants') }}" class="btn btn-secondary btn-sm float-right">목록</a>
                 </div>
 
                 <div class="card mt-3">
@@ -136,8 +144,12 @@
                                   action="{{ route('comments_delete', [$restaurant->id, $comment->id]) }}">
                                 @csrf
                                 @method('delete')
-                                <a href="{{ route('comments_edit', [$restaurant->id, $comment->id]) }}" class="small" style="text-decoration: none; color:#444;">수정</a>
-                                <span class="small btn-comment-delete" style="cursor:pointer" data-id="{{ $comment->id }}">삭제</span>
+                                @can('update', $comment)
+                                    <a href="{{ route('comments_edit', [$restaurant->id, $comment->id]) }}" class="small" style="text-decoration: none; color:#444;">수정</a>
+                                @endcan
+                                @can('delete', $comment)
+                                    <span class="small btn-comment-delete" style="cursor:pointer" data-id="{{ $comment->id }}">삭제</span>
+                                @endcan
                             </form>
                         </div>
                     @endif

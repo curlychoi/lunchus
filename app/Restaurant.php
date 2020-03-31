@@ -4,9 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Restaurant extends Model
 {
+    use SoftDeletes;
+
     protected $fillable = [
         'category_id', 'name', 'walk_time', 'memo', 'url', 'user_id',
     ];

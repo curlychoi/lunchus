@@ -77,12 +77,15 @@ class RestaurantController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Restaurant  $restaurant
-     * @return \Illuminate\Http\Response
+     * @param \App\Restaurant $restaurant
+     * @return RedirectResponse|Redirector
+     * @throws \Exception
      */
     public function destroy(Restaurant $restaurant)
     {
-        //
+        $restaurant->delete();
+
+        return redirect(route('restaurants'));
     }
 
     /**
