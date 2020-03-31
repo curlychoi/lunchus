@@ -31,6 +31,9 @@
                                     <p class="card-text">
                                         {{ $lunch->restaurant->memo }}
                                     </p>
+                                    <div class="small mt-3">
+                                        제안자 : {{ $lunch->user->name }}
+                                    </div>
 
                                 </div>
                                 <div class="card-footer">

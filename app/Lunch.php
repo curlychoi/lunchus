@@ -22,6 +22,11 @@ class Lunch extends Model
             ->orderBy('lunch_user.id');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function scopeIsTodayRestaurant($query, $restaurantId)
     {
         return $query->where('lunch_day', now()->format('Y-m-d'))
