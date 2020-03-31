@@ -33,7 +33,7 @@
                                     </p>
 
                                     @if ($lunch->user_id === auth()->id())
-                                        <form method="post" id="form-delete-{{ $lunch->id }}" action="{{ route('lunch_delete', [$lunch->id]) }}" onsubmit="return destroy(event)">
+                                        <form method="post" id="form-delete-{{ $lunch->id }}" action="{{ route('lunch_delete', [$lunch->id]) }}" onsubmit="return confirm('정말?')">
                                             @csrf
                                             @method('delete')
                                             <i class="fa fa-trash float-right mt-2 btn-delete" style="cursor:pointer" data-id="{{ $lunch->id }}"></i>
@@ -96,13 +96,6 @@
                 $('#form-delete-' + $(this).attr('data-id')).submit();
             });
         });
-
-        function destroy(event) {
-            if (!confirm('정말?')) {
-                return false;
-            }
-            return true;
-        }
 
     </script>
 @endpush
