@@ -36,6 +36,7 @@ class RestaurantController extends Controller
             'name' => $request->post('name'),
             'url' => $request->post('url') ?? '',
             'walk_time' => $request->post('walk_time') ?? '',
+            'user_id' => auth()->id(),
             'memo' => $request->post('memo') ?? '',
         ]);
 

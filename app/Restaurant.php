@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Restaurant extends Model
 {
     protected $fillable = [
-        'category_id', 'name', 'walk_time', 'memo', 'url',
+        'category_id', 'name', 'walk_time', 'memo', 'url', 'user_id',
     ];
 
     public function category()
