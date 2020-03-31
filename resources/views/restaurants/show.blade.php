@@ -56,7 +56,7 @@
                                 <label for="memo" class="col-md-4 col-form-label text-md-right">설명</label>
 
                                 <div class="col-md-6 col-form-label">
-                                    {{ $restaurant->memo }}
+                                    {!! nl2br(e($restaurant->memo)) !!}
                                 </div>
                             </div>
 
@@ -133,7 +133,7 @@
                     </div>
                     <div class="card">
                         <div class="card-body">
-                            {{ $comment->memo }}
+                            {!! nl2br(e($comment->memo)) !!}
                         </div>
                     </div>
                     @if ($comment->user_id === auth()->id())
