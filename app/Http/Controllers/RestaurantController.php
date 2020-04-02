@@ -19,7 +19,7 @@ class RestaurantController extends Controller
             'categories' => Category::all(),
             'restaurants' => Restaurant::query()
                 ->search($request->get('query'))
-                ->latest('id')
+                ->latest('updated_at')
                 ->get(),
         ]);
     }

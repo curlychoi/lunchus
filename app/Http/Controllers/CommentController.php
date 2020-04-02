@@ -18,6 +18,8 @@ class CommentController extends Controller
             'memo' => $request->post('memo'),
         ]);
 
+        $restaurant->touch();
+
         return redirect(route('restaurant_show', $restaurant->id));
     }
 
