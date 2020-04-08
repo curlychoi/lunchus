@@ -23,6 +23,7 @@ Auth::routes(['verify' => true]);
 
 Route::get('/restaurants', 'RestaurantController@index')->name('restaurants');
 Route::get('/lunch', 'LunchController@index')->name('lunch_home');
+Route::get('/faq', 'FaqController@index')->name('faq');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/restaurants/write', 'RestaurantController@create')->name('restaurant_register');

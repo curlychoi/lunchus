@@ -45,6 +45,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('lunch_home') }}">오늘의 점심</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('faq') }}">궁금해?</a>
+                        </li>
                         <!-- Authentication Links -->
                         @guest
                             <li class="nav-item">
