@@ -45,6 +45,11 @@ class Restaurant extends Model
         return $this->hasMany(RestaurantHistory::class)->latest('id');
     }
 
+    public function lunches()
+    {
+        return $this->hasMany(Lunch::class);
+    }
+
     /**
      * Scope a query to only include popular users.
      *

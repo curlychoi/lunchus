@@ -1,4 +1,4 @@
-<?php /** @var \App\Restaurant $restaurant */?>
+<?php /** @var \App\Lunch $lunch */?>
 <?php /** @var \App\Restaurant $restaurant */?>
 @extends('layouts.app')
 

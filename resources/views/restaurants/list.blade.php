@@ -25,6 +25,7 @@
                             <tr>
                                 <th>이름</th>
                                 <th>이동시간</th>
+                                <th>선택</th>
 {{--                                <th>설명</th>--}}
                                 <th>-</th>
                             </tr>
@@ -50,6 +51,7 @@
                                     <a href="{{ $restaurant->url }}" target="_blank"><i class="fa fa-link"></i></a>
                                     @endif
                                 </td>
+                                <td>{{ $restaurant->lunches()->count() }}</td>
 {{--                                <td style="width: 200px; text-overflow: ellipsis; overflow: hidden">{{ $restaurant->memo }}</td>--}}
                                 <td style="width: 100px;">
                                     <button data-url="{{ route('to_lunch', $restaurant->id) }}" class="btn btn-danger btn-sm btn-to-lunch">오늘점심</button>
